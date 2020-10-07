@@ -7,8 +7,24 @@ public class TicTacToeGame {
 		System.out.println("welcome to tictactoe problem");
 		Scanner sc = new Scanner(System.in);
 		char[] board = createBoard();
-		char option = (chooseOption(sc) == 'X') ? 'O' : 'X';
+		char option = (chooseOption(sc) == 'X') ? 'X' : 'O';
+		userInput(board,sc,option);
 		showBoard(board);
+	}
+
+	private static void userInput(char[] board, Scanner input, char option) {
+		int userInput;
+		while(true){
+			System.out.println("Enter the index you wants to put the value");
+			userInput=input.nextInt();
+			if(board[userInput] != ' '){
+				System.out.println("the index is not free");
+				break;
+			}
+			else{
+				board[userInput]=option;
+			}
+		}
 	}
 
 	private static void showBoard(char[] board) {
@@ -29,6 +45,6 @@ public class TicTacToeGame {
 	// taking an input character from user and returning to the main
 	private static char chooseOption(Scanner sc) {
 		System.out.println("Enter the symbol");
-		return sc.next().charAt(0);
+		return sc.next().toUpperCase().charAt(0);
 	}
 }
