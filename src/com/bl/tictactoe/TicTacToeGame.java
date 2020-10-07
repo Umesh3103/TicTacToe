@@ -5,8 +5,9 @@ import java.util.Scanner;
 public class TicTacToeGame {
 	public static void main(String[] args) {
 		System.out.println("welcome to tictactoe problem");
+		Scanner sc= new Scanner(System.in);
 		char[] board = createBoard();
-		char option = chooseOption();
+		char option = chooseOption(sc);
 		if(option == 'X' || option == 'x'){
 			System.out.println("Player symbol");
 		}
@@ -16,6 +17,20 @@ public class TicTacToeGame {
 		else{
 			System.out.println("Enter proper symbol");
 		}
+		showBoard(board);
+		
+	}
+	private static void showBoard(char[] board) {
+		// TODO Auto-generated method stub
+		for(int position = 1; position < 4; position++){
+			for(int row = 1; row < 4; row++){
+				System.out.print("  |"+board[position]);
+			}
+			System.out.println();
+			System.out.print("-------------");
+			System.out.println();
+		}
+		
 	}
 	// creating the board
 	private static char[] createBoard() {
@@ -26,11 +41,9 @@ public class TicTacToeGame {
 		return board;
 	}
 	// taking an input character from user and returning to the main
-	private static char chooseOption(){
-		Scanner sc= new Scanner(System.in);
+	private static char  chooseOption(Scanner sc){
 		System.out.println("Enter the symbol");
-		char symbol= sc.next().charAt(0);
-		return symbol;
+		return sc.next().charAt(0);
 	}
 }
 
