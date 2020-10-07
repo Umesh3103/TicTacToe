@@ -1,5 +1,6 @@
 package com.bl.tictactoe;
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class TicTacToeGame {
@@ -8,8 +9,22 @@ public class TicTacToeGame {
 		Scanner sc = new Scanner(System.in);
 		char[] board = createBoard();
 		char option = (chooseOption(sc) == 'X') ? 'X' : 'O';
+		int toss =startPlay();
 		enterValue(board, sc, option);
 		showBoard(board);
+	}
+	// method to decide who will play first
+	private static int startPlay() {
+		int toss =(int) Math.floor(Math.random()*10)%2;
+		if(toss==0){
+			System.out.println("player will start");
+			return 0;
+		}
+		else{
+			System.out.println("computer will start");
+			return 1;
+		}
+		
 	}
 	// entering value and printing the board
 	private static void enterValue(char[] board, Scanner sc, char option) {
@@ -30,7 +45,7 @@ public class TicTacToeGame {
 		}
 	}
 
-
+	
 	// printing the board
 	private static void showBoard(char[] board) {
 		// TODO Auto-generated method stub
