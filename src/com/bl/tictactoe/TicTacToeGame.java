@@ -17,13 +17,19 @@ public class TicTacToeGame {
 		while(true){
 			System.out.println("Enter the index you wants to put the value");
 			userInput=input.nextInt();
-			if(board[userInput] != ' '){
-				System.out.println("the index is not free");
-				break;
+			if(userInput>=1 && userInput <10){
+				if(board[userInput] != ' '){
+					System.out.println("the index is not free");
+					break;
+				}
+				else{
+					board[userInput]=option;
+				}
 			}
 			else{
-				board[userInput]=option;
+				System.out.println("Enter proper index");
 			}
+			
 		}
 	}
 
