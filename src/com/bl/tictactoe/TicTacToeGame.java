@@ -8,27 +8,44 @@ public class TicTacToeGame {
 		System.out.println("welcome to tictactoe problem");
 		Scanner sc = new Scanner(System.in);
 		char[] board = createBoard();
-		char option = (chooseOption(sc) == 'X') ? 'X' : 'O';
-		int toss =startPlay();
-		enterValue(board, sc, option);
-		showBoard(board);
+		char toss =whoStartFirst();
+		enterValue(board, sc, toss);
+	}
+	
+	private static int checkWinner(char[] board, char toss) {
+		if(isWinning(board,toss)){
+			System.out.println("Winner is "+toss);
+			return 1;
+		}
+		return 0;
+	}
+
+	private static boolean isWinning(char[] board, char ch) {
+			return (board[1] == ch && board[2]==ch && board[3]==ch ||
+					board[4] == ch && board[5]==ch && board[6]==ch ||
+					board[7] == ch && board[8]==ch && board[9]==ch ||
+					board[1] == ch && board[4]==ch && board[7]==ch ||
+					board[2] == ch && board[5]==ch && board[8]==ch ||
+					board[3] == ch && board[6]==ch && board[9]==ch ||
+					board[1] == ch && board[5]==ch && board[9]==ch ||
+					board[3] == ch && board[5]==ch && board[7]==ch);
 	}
 	// method to decide who will play first
-	private static int startPlay() {
+	private static char whoStartFirst() {
 		int toss =(int) Math.floor(Math.random()*10)%2;
 		if(toss==0){
 			System.out.println("player will start");
-			return 0;
+			return 'X';
 		}
 		else{
 			System.out.println("computer will start");
-			return 1;
+			return 'O';
 		}
 		
 	}
 	// entering value and printing the board
 	private static void enterValue(char[] board, Scanner sc, char option) {
-		int userInput;
+		int userInput,check;
 		while (true) {
 			System.out.println("Enter the index you wants to put the value");
 			userInput = sc.nextInt();
@@ -38,6 +55,12 @@ public class TicTacToeGame {
 					break;
 				} else {
 					board[userInput] = option;
+					showBoard(board);
+					check = checkWinner(board,option);
+					if(check==1){
+						option = (option == 'X')? 'O' : 'X';
+						break;
+					}
 				}
 			} else {
 				System.out.println("Enter proper index");
@@ -49,9 +72,9 @@ public class TicTacToeGame {
 	// printing the board
 	private static void showBoard(char[] board) {
 		// TODO Auto-generated method stub
-		System.out.println(board[1] + "  |" + board[2] + "  |" + board[3] + "\n" + "-----------" + "\n" + board[4]
-				+ "  |" + board[5] + "  |" + board[6] + "\n" + "-----------" + "\n" + board[7] + "  |" + board[8]
-				+ "  |" + board[9]);
+		System.out.println(board[1]+ "|"+ board[2]+"|" +board[3]+"|\n"+ board[4]+"|"+board[5]+"|"
+				+board[6]+"|\n" + board[7]+"|"  + board[8]+"|"
+				 + board[9]+"|");
 	}
 
 	// creating the board
