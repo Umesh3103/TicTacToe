@@ -20,15 +20,18 @@ public class TicTacToeGame {
 			if(check==1){
 				break;
 			}
+			int value =checkBlockingMove(board,turn);
+			int result = checkWinningMove(board,turn);
+			if(result ==1){
+				break;
+			}
+			if(value==0){
 			if(turn == 'X'){
 				turn ='O';
 			}
 			else{
 				turn = 'X';
 			}
-			int result = checkWinningMove(board,turn);
-			if(result ==1){
-				break;
 			}
 		}
 		showBoard(board);
@@ -36,6 +39,135 @@ public class TicTacToeGame {
 	}
 
 	
+	private static int checkBlockingMove(char[] board, char turn) {
+		int flag=0;
+		char move = (turn == 'X')? 'O' : 'X';
+		if(board[1]==turn&& board[2]==turn){
+			if(board[3]==' '){
+				board[3]=move;
+				flag=1;
+			}
+		}
+		if(board[2]==turn&& board[3]==turn){
+			if(board[1]==' '){
+				board[1]=move;
+				flag=1;
+			}
+		}if(board[1]==turn&& board[3]==turn){
+			if(board[2]==' '){
+				board[2]=move;
+				flag=1;
+			}
+		}if(board[4]==turn&& board[5]==turn){
+			if(board[6]==' '){
+				board[6]=move;
+				flag=1;
+			}
+		}if(board[4]==turn&& board[6]==turn){
+			if(board[5]==' '){
+				board[5]=move;
+				flag=1;
+			}
+		}if(board[5]==turn&& board[6]==turn){
+			if(board[4]==' '){
+				board[4]=move;
+				flag=1;
+			}
+		}if(board[7]==turn&& board[8]==turn){
+			if(board[9]==' '){
+				board[9]=move;
+				flag=1;
+			}
+		}if(board[7]==turn&& board[9]==turn){
+			if(board[8]==' '){
+				board[8]=move;
+				flag=1;
+			}
+		}if(board[8]==turn&& board[9]==turn){
+			if(board[7]==' '){
+				board[7]=move;
+				flag=1;
+			}
+		}if(board[1]==turn&& board[4]==turn){
+			if(board[7]==' '){
+				board[7]=move;
+				flag=1;
+			}
+		}if(board[1]==turn&& board[7]==turn){
+			if(board[4]==' '){
+				board[4]=move;
+				flag=1;
+			}
+		}if(board[4]==turn&& board[7]==turn){
+			if(board[1]==' '){
+				board[1]=move;
+				flag=1;
+			}
+		}if(board[2]==turn&& board[5]==turn){
+			if(board[8]==' '){
+				board[8]=move;
+				flag=1;
+			}
+		}if(board[2]==turn&& board[8]==turn){
+			if(board[5]==' '){
+				board[5]=move;
+				flag=1;
+			}
+		}if(board[5]==turn&& board[8]==turn){
+			if(board[2]==' '){
+				board[2]=move;
+				flag=1;
+			}
+		}if(board[3]==turn&& board[6]==turn){
+			if(board[9]==' '){
+				board[9]=move;	
+				flag=1;
+			}
+		}if(board[3]==turn&& board[9]==turn){
+			if(board[6]==' '){
+				board[6]=move;
+				flag=1;
+			}
+		}if(board[6]==turn&& board[9]==turn){
+			if(board[3]==' '){
+				board[3]=move;
+				flag=1;
+			}
+		}if(board[1]==turn&& board[5]==turn){
+			if(board[9]==' '){
+				board[9]=move;
+				flag=1;
+			}
+		}if(board[1]==turn&& board[9]==turn){
+			if(board[5]==' '){
+				board[5]=move;
+				flag=1;
+			}
+		}if(board[5]==turn&& board[9]==turn){
+			if(board[1]==' '){
+				board[1]=move;
+				flag=1;
+			}
+		}if(board[3]==turn&& board[5]==turn){
+			if(board[7]==' '){
+				board[7]=move;
+				flag=1;
+			}
+		}if(board[3]==turn&& board[7]==turn){
+			if(board[5]==' '){
+				board[5]=move;
+				flag=1;
+			}
+		}if(board[5]==turn&& board[7]==turn){
+			if(board[3]==' '){
+				board[3]=move;
+				flag=1;
+			}
+		}
+		showBoard(board);
+		return flag;
+	}
+
 	private static int checkWinningMove(char[] board, char turn) {
 		int flag=0;
 		if(board[1]==turn&& board[2]==turn){
@@ -205,7 +337,6 @@ public class TicTacToeGame {
 					System.out.println("the index is not free");
 				} else {
 					board[userInput] = option;
-					showBoard(board);
 				}
 			} else {
 				System.out.println("Enter proper index");
