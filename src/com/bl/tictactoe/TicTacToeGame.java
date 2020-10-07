@@ -8,35 +8,35 @@ public class TicTacToeGame {
 		Scanner sc = new Scanner(System.in);
 		char[] board = createBoard();
 		char option = (chooseOption(sc) == 'X') ? 'X' : 'O';
-		userInput(board,sc,option);
+		enterValue(board, sc, option);
 		showBoard(board);
 	}
-
-	private static void userInput(char[] board, Scanner input, char option) {
+	// entering value and printing the board
+	private static void enterValue(char[] board, Scanner sc, char option) {
 		int userInput;
-		while(true){
+		while (true) {
 			System.out.println("Enter the index you wants to put the value");
-			userInput=input.nextInt();
-			if(userInput>=1 && userInput <10){
-				if(board[userInput] != ' '){
+			userInput = sc.nextInt();
+			if (userInput >= 1 && userInput < 10) {
+				if (board[userInput] != ' ') {
 					System.out.println("the index is not free");
 					break;
+				} else {
+					board[userInput] = option;
 				}
-				else{
-					board[userInput]=option;
-				}
-			}
-			else{
+			} else {
 				System.out.println("Enter proper index");
 			}
-			
 		}
 	}
 
+
+	// printing the board
 	private static void showBoard(char[] board) {
 		// TODO Auto-generated method stub
-		System.out.println(board[1]+"  |"+board[2]+"  |"+board[3]+"\n"+"-----------"+"\n"+board[4]+"  |"+board[5]+"  |"+board[6]+"\n"
-				+"-----------"+"\n"+board[7]+"  |"+board[8]+"  |"+board[9]);
+		System.out.println(board[1] + "  |" + board[2] + "  |" + board[3] + "\n" + "-----------" + "\n" + board[4]
+				+ "  |" + board[5] + "  |" + board[6] + "\n" + "-----------" + "\n" + board[7] + "  |" + board[8]
+				+ "  |" + board[9]);
 	}
 
 	// creating the board
