@@ -50,6 +50,19 @@ public class TicTacToeGame {
 		if(userMove!=0){
 			return userMove;
 		}
+		int[] cornors={1,3,7,9};
+		int cornor = getMove(board,cornors);
+		if(cornor!=0){
+			return cornor;
+		}
+		return 0;
+	}
+	private static int getMove(char[] board, int[] cornors) {
+		for(int position=1;position<board.length;position++){
+			if(isCellFree(board,cornors[position])){
+				return cornors[position];
+			}
+		}
 		return 0;
 	}
 	// checking game condition after some plays
