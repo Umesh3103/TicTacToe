@@ -55,6 +55,15 @@ public class TicTacToeGame {
 		if(cornor!=0){
 			return cornor;
 		}
+		int centre =5;
+		if(isCellFree(board,centre)){
+			return centre;
+		}
+		int[] sides= {2,4,6,8};
+		int side=getMove(board,sides);
+		if(side!=0){
+			return side;
+		}
 		return 0;
 	}
 	private static int getMove(char[] board, int[] cornors) {
