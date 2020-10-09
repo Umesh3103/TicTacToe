@@ -1,299 +1,92 @@
 package com.bl.tictactoe;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
 
 public class TicTacToeGame {
+	public enum User{PLAYER,COMPUTER};
+	public enum Conditions{WIN,CONTINUE,TIE};
 	public static void main(String[] args) {
 		System.out.println("welcome to tictactoe problem");
 		Scanner sc = new Scanner(System.in);
-		char[] board = createBoard();
-		char toss =whoStartFirst();
-		twoPlayers(board,sc,toss);
+		twoPlayers(sc);
 	}
 	
-	private static void twoPlayers(char[] board,Scanner sc,char turn) {
-		while(true){
-			enterValue(board,sc,turn);
-			int check = checkWinner(board,turn);
-			if(check==1){
-				break;
-			}
-			int value =checkBlockingMove(board,turn);
-			int result = checkWinningMove(board,turn);
-			if(result ==1){
-				break;
-			}
-			if(value==0){
-			if(turn == 'X'){
-				turn ='O';
+	private static void twoPlayers(Scanner sc) {
+		char toss = sc.next().charAt(0);
+		char turn = chooseOption(toss);
+		char computerMove = (chooseOption(toss)== 'X')? 'O':'X';
+		char[] board=createBoard();
+		Conditions gameCondition;
+		User player = whoStartFirst();
+		boolean flag=true;
+		while(flag){
+			if(player == User.PLAYER){
+				showBoard(board);
+				int move1 = playerMove(board,sc);
+				gameCondition = gameStatus(board,move1,turn);
+				player = User.COMPUTER;
 			}
 			else{
-				turn = 'X';
+				int move2 = ComputerMove(board,turn,computerMove);
+				gameCondition = gameStatus(board,move2,computerMove);
+				player = User.PLAYER;
 			}
+			if(gameCondition == Conditions.CONTINUE){
+				continue;
 			}
+			flag=false;	
 		}
-		showBoard(board);
-		checkWinner(board,turn);
 	}
 
-	
-	private static int checkBlockingMove(char[] board, char turn) {
-		int flag=0;
-		char move = (turn == 'X')? 'O' : 'X';
-		if(board[1]==turn&& board[2]==turn){
-			if(board[3]==' '){
-				board[3]=move;
-				flag=1;
-			}
+	private static int ComputerMove(char[] board, char turn, char computerMove) {
+		int winMove= winningMove(board,computerMove);
+		System.out.println(winMove+"\n");
+		if(winMove!=0){
+			return winMove;
 		}
-		if(board[2]==turn&& board[3]==turn){
-			if(board[1]==' '){
-				board[1]=move;
-				flag=1;
-			}
-		}if(board[1]==turn&& board[3]==turn){
-			if(board[2]==' '){
-				board[2]=move;
-				flag=1;
-			}
-		}if(board[4]==turn&& board[5]==turn){
-			if(board[6]==' '){
-				board[6]=move;
-				flag=1;
-			}
-		}if(board[4]==turn&& board[6]==turn){
-			if(board[5]==' '){
-				board[5]=move;
-				flag=1;
-			}
-		}if(board[5]==turn&& board[6]==turn){
-			if(board[4]==' '){
-				board[4]=move;
-				flag=1;
-			}
-		}if(board[7]==turn&& board[8]==turn){
-			if(board[9]==' '){
-				board[9]=move;
-				flag=1;
-			}
-		}if(board[7]==turn&& board[9]==turn){
-			if(board[8]==' '){
-				board[8]=move;
-				flag=1;
-			}
-		}if(board[8]==turn&& board[9]==turn){
-			if(board[7]==' '){
-				board[7]=move;
-				flag=1;
-			}
-		}if(board[1]==turn&& board[4]==turn){
-			if(board[7]==' '){
-				board[7]=move;
-				flag=1;
-			}
-		}if(board[1]==turn&& board[7]==turn){
-			if(board[4]==' '){
-				board[4]=move;
-				flag=1;
-			}
-		}if(board[4]==turn&& board[7]==turn){
-			if(board[1]==' '){
-				board[1]=move;
-				flag=1;
-			}
-		}if(board[2]==turn&& board[5]==turn){
-			if(board[8]==' '){
-				board[8]=move;
-				flag=1;
-			}
-		}if(board[2]==turn&& board[8]==turn){
-			if(board[5]==' '){
-				board[5]=move;
-				flag=1;
-			}
-		}if(board[5]==turn&& board[8]==turn){
-			if(board[2]==' '){
-				board[2]=move;
-				flag=1;
-			}
-		}if(board[3]==turn&& board[6]==turn){
-			if(board[9]==' '){
-				board[9]=move;	
-				flag=1;
-			}
-		}if(board[3]==turn&& board[9]==turn){
-			if(board[6]==' '){
-				board[6]=move;
-				flag=1;
-			}
-		}if(board[6]==turn&& board[9]==turn){
-			if(board[3]==' '){
-				board[3]=move;
-				flag=1;
-			}
-		}if(board[1]==turn&& board[5]==turn){
-			if(board[9]==' '){
-				board[9]=move;
-				flag=1;
-			}
-		}if(board[1]==turn&& board[9]==turn){
-			if(board[5]==' '){
-				board[5]=move;
-				flag=1;
-			}
-		}if(board[5]==turn&& board[9]==turn){
-			if(board[1]==' '){
-				board[1]=move;
-				flag=1;
-			}
-		}if(board[3]==turn&& board[5]==turn){
-			if(board[7]==' '){
-				board[7]=move;
-				flag=1;
-			}
-		}if(board[3]==turn&& board[7]==turn){
-			if(board[5]==' '){
-				board[5]=move;
-				flag=1;
-			}
-		}if(board[5]==turn&& board[7]==turn){
-			if(board[3]==' '){
-				board[3]=move;
-				flag=1;
-			}
+		int userMove=winningMove(board,turn);
+		System.out.println(userMove);
+		if(userMove!=0){
+			return userMove;
 		}
-		showBoard(board);
-		return flag;
+		int[] cornor={1,3,7,9};
+		int cornorMove=random(board,cornor);
+		if(cornorMove!=0) return cornorMove;
+		return 0;
 	}
 
-	private static int checkWinningMove(char[] board, char turn) {
-		int flag=0;
-		if(board[1]==turn&& board[2]==turn){
-			if(board[3]==' '){
-				board[3]=turn;
-				flag=1;
+	private static int random(char[] board, int[] cornor) {
+		for(int i=1;i<board.length;i++){
+			if(isCellFree(board,cornor[i])){
+				return cornor[i];
 			}
 		}
-		if(board[2]==turn&& board[3]==turn){
-			if(board[1]==' '){
-				board[1]=turn;
-				flag=1;
-			}
-		}if(board[1]==turn&& board[3]==turn){
-			if(board[2]==' '){
-				board[2]=turn;
-				flag=1;
-			}
-		}if(board[4]==turn&& board[5]==turn){
-			if(board[6]==' '){
-				board[6]=turn;
-				flag=1;
-			}
-		}if(board[4]==turn&& board[6]==turn){
-			if(board[5]==' '){
-				board[5]=turn;
-				flag=1;
-			}
-		}if(board[5]==turn&& board[6]==turn){
-			if(board[4]==' '){
-				board[4]=turn;
-				flag=1;
-			}
-		}if(board[7]==turn&& board[8]==turn){
-			if(board[9]==' '){
-				board[9]=turn;
-				flag=1;
-			}
-		}if(board[7]==turn&& board[9]==turn){
-			if(board[8]==' '){
-				board[8]=turn;
-				flag=1;
-			}
-		}if(board[8]==turn&& board[9]==turn){
-			if(board[7]==' '){
-				board[7]=turn;
-				flag=1;
-			}
-		}if(board[1]==turn&& board[4]==turn){
-			if(board[7]==' '){
-				board[7]=turn;
-				flag=1;
-			}
-		}if(board[1]==turn&& board[7]==turn){
-			if(board[4]==' '){
-				board[4]=turn;
-				flag=1;
-			}
-		}if(board[4]==turn&& board[7]==turn){
-			if(board[1]==' '){
-				board[1]=turn;
-				flag=1;
-			}
-		}if(board[2]==turn&& board[5]==turn){
-			if(board[8]==' '){
-				board[8]=turn;
-				flag=1;
-			}
-		}if(board[2]==turn&& board[8]==turn){
-			if(board[5]==' '){
-				board[5]=turn;
-				flag=1;
-			}
-		}if(board[5]==turn&& board[8]==turn){
-			if(board[2]==' '){
-				board[2]=turn;
-				flag=1;
-			}
-		}if(board[3]==turn&& board[6]==turn){
-			if(board[9]==' '){
-				board[9]=turn;
-				flag=1;
-			}
-		}if(board[3]==turn&& board[9]==turn){
-			if(board[6]==' '){
-				board[6]=turn;
-				flag=1;
-			}
-		}if(board[6]==turn&& board[9]==turn){
-			if(board[3]==' '){
-				board[3]=turn;
-				flag=1;
-			}
-		}if(board[1]==turn&& board[5]==turn){
-			if(board[9]==' '){
-				board[9]=turn;
-				flag=1;
-			}
-		}if(board[1]==turn&& board[9]==turn){
-			if(board[5]==' '){
-				board[5]=turn;
-				flag=1;
-			}
-		}if(board[5]==turn&& board[9]==turn){
-			if(board[1]==' '){
-				board[1]=turn;
-				flag=1;
-			}
-		}if(board[3]==turn&& board[5]==turn){
-			if(board[7]==' '){
-				board[7]=turn;
-				flag=1;
-			}
-		}if(board[3]==turn&& board[7]==turn){
-			if(board[5]==' '){
-				board[5]=turn;
-				flag=1;
-			}
-		}if(board[5]==turn&& board[7]==turn){
-			if(board[3]==' '){
-				board[3]=turn;
-				flag=1;
+		return 0;
+	}
+
+	private static Conditions gameStatus(char[] board, int position, char turn) {
+		play(board,position,turn);
+		if(isWinning(board,turn)){
+			showBoard(board);
+			return Conditions.WIN;
+		}
+		if(isBoardFull(board)){
+			showBoard(board);
+			return Conditions.TIE;
+		}
+		return Conditions.CONTINUE;
+	}
+
+	private static boolean isBoardFull(char[] board) {
+		for(int position=1;position<board.length;position++){
+			if(isCellFree(board,position)){
+				return false;
 			}
 		}
-		return flag;
-		
+		return true;
 	}
 
 	private static int checkWinner(char[] board, char toss) {
@@ -315,35 +108,63 @@ public class TicTacToeGame {
 					board[3] == ch && board[5]==ch && board[7]==ch);
 	}
 	// method to decide who will play first
-	private static char whoStartFirst() {
+	private static User whoStartFirst() {
 		int toss =(int) Math.floor(Math.random()*10)%2;
 		if(toss==0){
 			System.out.println("player will start");
-			return 'X';
+			return User.PLAYER;
 		}
 		else{
 			System.out.println("computer will start");
-			return 'O';
+			return User.COMPUTER;
 		}
 		
 	}
 	// entering value and printing the board
-	private static void enterValue(char[] board, Scanner sc, char option) {
+	private static int playerMove(char[] board, Scanner sc) {
+		ArrayList<Integer> availableBox = new ArrayList<>();
+		for(int index=1;index<10;index++){
+			availableBox.add(index);
+		}
 		int userInput,check;
+		while(true){
 			System.out.println("Enter the index you wants to put the value");
 			userInput = sc.nextInt();
-			if (userInput >= 1 && userInput < 10) {
-				if (board[userInput] != ' ') {
-					System.out.println("the index is not free");
-				} else {
-					board[userInput] = option;
-				}
-			} else {
-				System.out.println("Enter proper index");
+			if(availableBox.contains(userInput) && isCellFree(board,userInput)){
+				return userInput;
 			}
+		}	
+	}
+	private static int winningMove(char[] board, char toss){
+		for(int position=1;position<board.length;position++){
+			char[] board1= newBoard(board);
+			if(isCellFree(board1,position)){
+				play(board1,position,toss);
+			}
+			if(isWinning(board1,toss)){
+				return position;
+			}
+		}
+		return 0;
+	}
+	private static char[] newBoard(char[] board) {
+		char[] newBoard = board.clone();
+		return newBoard;
 	}
 
-	
+	private static void play(char[] board1, int position, char toss) {
+		if(isCellFree(board1,position)){
+			board1[position]=toss;
+		}
+	}
+
+	private static boolean isCellFree(char[] board, int userInput) {
+		if(board[userInput]==' '){
+			return true;
+		}
+		return false;
+	}
+
 	// printing the board
 	private static void showBoard(char[] board) {
 		// TODO Auto-generated method stub
@@ -362,8 +183,7 @@ public class TicTacToeGame {
 	}
 
 	// taking an input character from user and returning to the main
-	private static char chooseOption(Scanner sc) {
-		System.out.println("Enter the symbol");
-		return sc.next().toUpperCase().charAt(0);
+	private static char chooseOption(char toss) {
+		return Character.toUpperCase(toss);
 	}
 }
