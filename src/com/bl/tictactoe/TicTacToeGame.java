@@ -12,7 +12,17 @@ public class TicTacToeGame {
 		System.out.println("welcome to tictactoe problem");
 		Scanner sc = new Scanner(System.in);
 		boolean willPlayMore=true;
-		twoPlayers(sc);
+		while(willPlayMore){
+			twoPlayers(sc);
+			System.out.println("Wants to play one more game? yes/no");
+			String answer=sc.next();
+			if(answer.contains("yes")){
+				willPlayMore=true;
+			}
+			else{
+				willPlayMore=false;
+			}
+		}
 	}
 	// Gameplay with computer vs player
 	private static void twoPlayers(Scanner sc) {
