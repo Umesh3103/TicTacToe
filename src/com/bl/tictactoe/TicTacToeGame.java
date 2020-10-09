@@ -11,10 +11,12 @@ public class TicTacToeGame {
 	public static void main(String[] args) {
 		System.out.println("welcome to tictactoe problem");
 		Scanner sc = new Scanner(System.in);
+		boolean willPlayMore=true;
 		twoPlayers(sc);
 	}
 	// Gameplay with computer vs player
 	private static void twoPlayers(Scanner sc) {
+		System.out.println("Enter Symbol:");
 		char toss = sc.next().charAt(0);
 		char turn = chooseOption(toss);
 		char computerMove = (chooseOption(toss)== 'X')? 'O':'X';
