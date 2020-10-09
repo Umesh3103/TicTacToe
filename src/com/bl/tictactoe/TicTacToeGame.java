@@ -13,7 +13,7 @@ public class TicTacToeGame {
 		Scanner sc = new Scanner(System.in);
 		twoPlayers(sc);
 	}
-	
+	// Gameplay with computer vs player
 	private static void twoPlayers(Scanner sc) {
 		char toss = sc.next().charAt(0);
 		char turn = chooseOption(toss);
@@ -40,33 +40,19 @@ public class TicTacToeGame {
 			flag=false;	
 		}
 	}
-
+	// computer move
 	private static int ComputerMove(char[] board, char turn, char computerMove) {
 		int winMove= winningMove(board,computerMove);
-		System.out.println(winMove+"\n");
 		if(winMove!=0){
 			return winMove;
 		}
 		int userMove=winningMove(board,turn);
-		System.out.println(userMove);
 		if(userMove!=0){
 			return userMove;
 		}
-		int[] cornor={1,3,7,9};
-		int cornorMove=random(board,cornor);
-		if(cornorMove!=0) return cornorMove;
 		return 0;
 	}
-
-	private static int random(char[] board, int[] cornor) {
-		for(int i=1;i<board.length;i++){
-			if(isCellFree(board,cornor[i])){
-				return cornor[i];
-			}
-		}
-		return 0;
-	}
-
+	// checking game condition after some plays
 	private static Conditions gameStatus(char[] board, int position, char turn) {
 		play(board,position,turn);
 		if(isWinning(board,turn)){
@@ -79,7 +65,7 @@ public class TicTacToeGame {
 		}
 		return Conditions.CONTINUE;
 	}
-
+	//checking if the board is full or not
 	private static boolean isBoardFull(char[] board) {
 		for(int position=1;position<board.length;position++){
 			if(isCellFree(board,position)){
@@ -88,7 +74,7 @@ public class TicTacToeGame {
 		}
 		return true;
 	}
-
+	//checking winner of the toss
 	private static int checkWinner(char[] board, char toss) {
 		if(isWinning(board,toss)){
 			System.out.println("Winner is "+toss);
@@ -96,7 +82,7 @@ public class TicTacToeGame {
 		}
 		return 0;
 	}
-
+	//Cheking winning conditions
 	private static boolean isWinning(char[] board, char ch) {
 			return (board[1] == ch && board[2]==ch && board[3]==ch ||
 					board[4] == ch && board[5]==ch && board[6]==ch ||
@@ -120,7 +106,7 @@ public class TicTacToeGame {
 		}
 		
 	}
-	// entering value and printing the board
+	// player's move
 	private static int playerMove(char[] board, Scanner sc) {
 		ArrayList<Integer> availableBox = new ArrayList<>();
 		for(int index=1;index<10;index++){
@@ -135,6 +121,7 @@ public class TicTacToeGame {
 			}
 		}	
 	}
+	//UC8 checking if it's a winning move or not
 	private static int winningMove(char[] board, char toss){
 		for(int position=1;position<board.length;position++){
 			char[] board1= newBoard(board);
@@ -147,17 +134,18 @@ public class TicTacToeGame {
 		}
 		return 0;
 	}
+	//creating a new clone board
 	private static char[] newBoard(char[] board) {
 		char[] newBoard = board.clone();
 		return newBoard;
 	}
-
+	//In case of free space putting mark there
 	private static void play(char[] board1, int position, char toss) {
 		if(isCellFree(board1,position)){
 			board1[position]=toss;
 		}
 	}
-
+	// checking if the cell is free or not
 	private static boolean isCellFree(char[] board, int userInput) {
 		if(board[userInput]==' '){
 			return true;
