@@ -66,6 +66,7 @@ public class TicTacToeGame {
 		}
 		return 0;
 	}
+	// player making moves
 	private static int getMove(char[] board, int[] cornors) {
 		for(int position=1;position<board.length;position++){
 			if(isCellFree(board,cornors[position])){
@@ -143,7 +144,7 @@ public class TicTacToeGame {
 			}
 		}	
 	}
-	//UC8 checking if it's a winning move or not
+	// checking if it's a winning move or not
 	private static int winningMove(char[] board, char toss){
 		for(int position=1;position<board.length;position++){
 			char[] board1= newBoard(board);
